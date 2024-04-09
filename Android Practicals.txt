@@ -1135,7 +1135,7 @@ xmlns:android="http://schemas.android.com/apk/res/android"
 
 Main_Activity.java_code:
 
-package com.example.myapplication_practical10;
+package com.example.first;
 import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -1145,90 +1145,104 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 public class MainActivity extends AppCompatActivity {
- EditText editTextName, editTextSurname, editTextClass,
-editTextHobbies, editTextMarks;
- RadioGroup radioGroupGender;
- RadioButton radioButtonMale, radioButtonFemale;
- Button buttonSubmit;
- @Override
- protected void onCreate(Bundle savedInstanceState) {
- super.onCreate(savedInstanceState);
- setContentView(R.layout.activity_main);
- editTextName = findViewById(R.id.editTextName);
- editTextSurname = findViewById(R.id.editTextSurname);
- editTextClass = findViewById(R.id.editTextClass);
- editTextHobbies = findViewById(R.id.editTextHobbies);
- editTextMarks = findViewById(R.id.editTextMarks);
- radioGroupGender =findViewById(R.id.radioGroupGender);
- radioButtonMale = findViewById(R.id.radioButtonMale);
- radioButtonFemale =findViewById(R.id.radioButtonFemale);
- buttonSubmit = findViewById(R.id.buttonSubmit);
- buttonSubmit.setOnClickListener(newView.OnClickListener() {
- @Override
- public void onClick(View v) {
- String name =editTextName.getText().toString();
- String surname =editTextSurname.getText().toString();
- String studentClass =editTextClass.getText().toString();
- String hobbies =editTextHobbies.getText().toString();
- String marks =editTextMarks.getText().toString();
- String gender = radioButtonMale.isChecked() ?"Male" : "Female";
- Intent intent = new Intent(MainActivity.this,Activity_display.class);
- intent.putExtra("name", name);
- intent.putExtra("surname", surname);
- intent.putExtra("class", studentClass);
- intent.putExtra("hobbies", hobbies);
- intent.putExtra("marks", marks);
- intent.putExtra("gender", gender);
- startActivity(intent);
- }
- });
- }
+    EditText editTextName, editTextSurname, editTextClass,
+            editTextHobbies, editTextMarks;
+    RadioGroup radioGroupGender;
+    RadioButton radioButtonMale, radioButtonFemale;
+    Button buttonSubmit;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        editTextName = findViewById(R.id.editTextName);
+        editTextSurname = findViewById(R.id.editTextSurname);
+        editTextClass = findViewById(R.id.editTextClass);
+        editTextHobbies = findViewById(R.id.editTextHobbies);
+        editTextMarks = findViewById(R.id.editTextMarks);
+        radioGroupGender = findViewById(R.id.radioGroupGender);
+        radioButtonMale = findViewById(R.id.radioButtonMale);
+        radioButtonFemale = findViewById(R.id.radioButtonFemale);
+        buttonSubmit = findViewById(R.id.buttonSubmit);
+        buttonSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String name =
+                        editTextName.getText().toString();
+                String surname =
+                        editTextSurname.getText().toString();
+                String studentClass =
+                        editTextClass.getText().toString();
+                String hobbies =editTextHobbies.getText().toString();
+                String marks =
+                        editTextMarks.getText().toString();
+                String gender = radioButtonMale.isChecked() ? "Male" : "Female";
+                Intent intent = new Intent(MainActivity.this, display.class);
+                intent.putExtra("name", name);
+                intent.putExtra("surname", surname);
+                intent.putExtra("class", studentClass);
+                intent.putExtra("hobbies", hobbies);
+                intent.putExtra("marks", marks);
+                intent.putExtra("gender", gender);
+                startActivity(intent);
+            }
+        });
+    }
 }
+
 
 Activity_display.java_code:
 
-package com.example.myapplication_practical10;
+package com.example.first;
+
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
-public class Activity_display extends AppCompatActivity {
- @Override
- protected void onCreate(Bundle savedInstanceState) {
- super.onCreate(savedInstanceState);
- setContentView(R.layout.activity_display);
- Bundle extras = getIntent().getExtras();
- if (extras != null) {
- String name = extras.getString("name");
- String surname = extras.getString("surname");
- String studentClass = extras.getString("class");
- String hobbies = extras.getString("hobbies");
- String marks = extras.getString("marks");
- String gender = extras.getString("gender");
- TextView textViewDetails =findViewById(R.id.textViewDetails);
- textViewDetails.setText("Student Details:");
+public class display extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_display);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String name = extras.getString("name");
+            String surname = extras.getString("surname");
+            String studentClass = extras.getString("class");
+            String hobbies = extras.getString("hobbies");
+            String marks = extras.getString("marks");
+            String gender = extras.getString("gender");
+            TextView textViewDetails = findViewById(R.id.textViewDetails);
+            textViewDetails.setText("Student Details:");
+            TableLayout tableLayoutDetails =
+                    findViewById(R.id.tableLayoutDetails);
 
- TableLayout tableLayoutDetails =findViewById(R.id.tableLayoutDetails);
- addRowToTable(tableLayoutDetails, "Name", name);
- addRowToTable(tableLayoutDetails, "Surname",surname);
- addRowToTable(tableLayoutDetails, "Class",studentClass);
- addRowToTable(tableLayoutDetails, "Gender",gender);
- addRowToTable(tableLayoutDetails, "Hobbies",hobbies);
- addRowToTable(tableLayoutDetails, "Marks", marks);
- }
- }
- private void addRowToTable(TableLayout tableLayout, Stringlabel, String value) {
- TableRow tableRow = new TableRow(this);
- TextView textViewLabel = new TextView(this);
- textViewLabel.setText(label);
- TextView textViewValue = new TextView(this);
- textViewValue.setText(value);
- tableRow.addView(textViewLabel);
- tableRow.addView(textViewValue);
- tableLayout.addView(tableRow);
- }
+            addRowToTable(tableLayoutDetails, "Name", name);
+            addRowToTable(tableLayoutDetails, "Surname",
+                    surname);
+            addRowToTable(tableLayoutDetails, "Class",
+                    studentClass);
+            addRowToTable(tableLayoutDetails, "Gender",
+                    gender);
+            addRowToTable(tableLayoutDetails, "Hobbies",
+                    hobbies);
+            addRowToTable(tableLayoutDetails, "Marks", marks);
+        }
+    }
+    private void addRowToTable(TableLayout tableLayout, String
+            label, String value) {
+        TableRow tableRow = new TableRow(this);
+        TextView textViewLabel = new TextView(this);
+        textViewLabel.setText(label);
+        TextView textViewValue = new TextView(this);
+        textViewValue.setText(value);
+        tableRow.addView(textViewLabel);
+        tableRow.addView(textViewValue);
+        tableLayout.addView(tableRow);
+    }
+
 }
+
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1472,79 +1486,88 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.os.Bundle;
 public class MainActivity extends AppCompatActivity {
- RadioGroup radioGroup;
- RadioButton selectedRadioButton;
- Button buttonSubmit;
- CheckBox cb1, cb2, cb3, cb4;
- @Override
- protected void onCreate(Bundle savedInstanceState) {
- super.onCreate(savedInstanceState);
- setContentView(R.layout.activity_main);
- buttonSubmit =(Button) findViewById(R.id.btnSubmit);
- radioGroup =(RadioGroup) findViewById(R.id.radioGroup);
- cb1 =(CheckBox) findViewById(R.id.cb1); 
- cb2 =(CheckBox)findViewById(R.id.cb2); 
- cb3 = (CheckBox)findViewById(R.id.cb3);
- cb4 = (CheckBox)findViewById(R.id.cb4);
- buttonSubmit.setOnClickListener(newView.OnClickListener()
- { @Override public void
- onClick(View view)
- {
- selectedRadioButton =(RadioButton)findViewById(radioGroup.getCheckedRadioButtonId()
-);
+    RadioGroup radioGroup;
+    RadioButton selectedRadioButton;
+    Button buttonSubmit;
+    CheckBox cb1, cb2, cb3, cb4;
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        buttonSubmit =(Button) findViewById(R.id.btnSubmit);
+        radioGroup =(RadioGroup) findViewById(R.id.radioGroup);
+        cb1 =(CheckBox) findViewById(R.id.cb1);
+        cb2 =(CheckBox)findViewById(R.id.cb2);
+        cb3 = (CheckBox)findViewById(R.id.cb3);
+        cb4 = (CheckBox)findViewById(R.id.cb4);
+        buttonSubmit.setOnClickListener(new
+                                                View.OnClickListener()
+                                                { @Override public void
+                                                onClick(View view)
+                                                {
+                                                    selectedRadioButton =
+                                                            (RadioButton)findViewById(radioGroup.getCheckedRadioButtonId()
+                                                            );
 
- String yourVote =selectedRadioButton.getText().toString();
- Toast.makeText(MainActivity.this, "Selected Radio Button is:" + yourVote , Toast.LENGTH_LONG).show();
-selectedRadioButton = (RadioButton)
-findViewById(radioGroup.getCheckedRadioButtonId());
- String checkBoxChoices = "";
- if
- (cb1.isChecked())
- {
- checkBoxChoices += cb1.getText().toString() +
-"\tYES";
- }
- else
- {
- checkBoxChoices += cb1.getText().toString() +
-"\tNO";
- }
- if (cb2.isChecked())
- {
- checkBoxChoices += cb2.getText().toString() +
-"\tYES";
- }
- else{
- checkBoxChoices += cb2.getText().toString() +
-"\tNO";
- }
- if (cb3.isChecked())
- {
- checkBoxChoices += cb3.getText().toString() +
-"\tYES";
- }
- else
- {
- checkBoxChoices += cb3.getText().toString() +
-"\tNO";
- }
- if (cb4.isChecked())
- {
- checkBoxChoices += cb4.getText().toString() +
-"\tYES";
- }
- else
- {
- checkBoxChoices += cb4.getText().toString() +
-"\tNO";
- }
- Toast.makeText(MainActivity.this, "Selected Radio Button is:" + yourVote + "\n CheckBox Choices:\n "+ checkBoxChoices ,
+                String yourVote =selectedRadioButton.getText().toString();
+                Toast.makeText(MainActivity.this, "Selected Radio Button is:" + yourVote , Toast.LENGTH_LONG).show();
+                selectedRadioButton = (RadioButton)
+                        findViewById(radioGroup.getCheckedRadioButtonId());
+                String checkBoxChoices = "";
+                if
+                (cb1.isChecked())
+                {
+                    checkBoxChoices += cb1.getText().toString() +
+                            "\tYES";
+                }
+                else
+                {
+                    checkBoxChoices += cb1.getText().toString() +
+                            "\tNO";
+                }
+                if (cb2.isChecked())
+                {
+                    checkBoxChoices += cb2.getText().toString() +
+                            "\tYES";
+                }
+                else{
+                    checkBoxChoices += cb2.getText().toString() +
+                            "\tNO";
+                }
+                if (cb3.isChecked())
+                {
+                    checkBoxChoices += cb3.getText().toString() +
+                            "\tYES";
+                }
+                else
+                {
+                    checkBoxChoices += cb3.getText().toString() +
+                            "\tNO";
+                }
+                if (cb4.isChecked())
+                {
+                    checkBoxChoices += cb4.getText().toString() +
+                            "\tYES";
+                }
+                else
+                {
+                    checkBoxChoices += cb4.getText().toString() +
+                            "\tNO";
+                }
+                Toast.makeText(MainActivity.this, "Selected Radio Button is:" + yourVote + "\n CheckBox Choices:\n "+ checkBoxChoices ,
 
- Toast.LENGTH_LONG).show();
- }
- });
- }
+                        Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 }
+
+
+
+
+
+
+
 
 
 
